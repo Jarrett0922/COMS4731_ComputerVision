@@ -1,0 +1,975 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Homework3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{COMS 4731 Computer Vision -\/- Homework
+3}\label{coms-4731-computer-vision----homework-3}
+
+\begin{itemize}
+\item
+  In this homework, you will construct a panorama by stitching several
+  individual and overlapping images together.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Problem 1: Homography (20 points)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Implement the \texttt{compute\_homography} function.
+    \item
+      Implement the \texttt{apply\_homography} function.
+    \end{itemize}
+  \item
+    \textbf{Problem 2: Warping (20 points)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Implement the \texttt{backward\_warp\_img} function.
+    \end{itemize}
+  \item
+    \textbf{Problem 3: SIFT and RANSAC (20 points)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Implement the \texttt{RANSAC} function.
+    \end{itemize}
+  \item
+    \textbf{Problem 4: Image Blending (20 points)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Implement the \texttt{blend\_image\_pair} function.
+    \end{itemize}
+  \item
+    \textbf{Problem 5: Creating Panoramas (20 points)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Implement the \texttt{stitch\_img} function.
+    \item
+      Create a panorama using your own photos.
+    \end{itemize}
+  \end{itemize}
+\item
+  Your job is to implement the sections marked with TODO to complete the
+  tasks.
+\item
+  Submission
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Please submit the notebook (ipynb and pdf) including the output of
+    all cells.
+  \end{itemize}
+\item
+  Note: Please install OpenCV (version 3.4.2.16) by running the
+  following command in the terminal
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{pip\ install\ opencv-python==3.4.2.16;\ pip\ install\ opencv-contrib-python==3.4.2.16}
+  \item
+    Otherwise, you may encounter error when running SIFT.
+  \end{itemize}
+\end{itemize}
+
+    \subsection{Setup}\label{setup}
+
+Before we get started, let's visualize the three separate images we
+ultimately want to stitch together.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{PIL} \PY{k}{import} \PY{n}{Image}
+        \PY{k+kn}{from} \PY{n+nn}{IPython} \PY{k}{import} \PY{n}{display}
+        \PY{k+kn}{import} \PY{n+nn}{sys}
+        \PY{k+kn}{import} \PY{n+nn}{random}
+        \PY{k+kn}{import} \PY{n+nn}{cv2}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{]}
+        
+        \PY{k}{def} \PY{n+nf}{load\PYZus{}image}\PY{p}{(}\PY{n}{filename}\PY{p}{)}\PY{p}{:}
+            \PY{n}{img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asarray}\PY{p}{(}\PY{n}{Image}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{filename}\PY{p}{)}\PY{p}{)}
+            \PY{n}{img} \PY{o}{=} \PY{n}{img}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float32}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{255.}
+            \PY{k}{return} \PY{n}{img}
+        
+        \PY{k}{def} \PY{n+nf}{show\PYZus{}image}\PY{p}{(}\PY{n}{img}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nearest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+        \PY{n}{center\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}center.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{left\PYZus{}img}   \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}left.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{right\PYZus{}img}  \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}right.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{show\PYZus{}image}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{[}\PY{n}{left\PYZus{}img}\PY{p}{,} \PY{n}{center\PYZus{}img}\PY{p}{,} \PY{n}{right\PYZus{}img}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Problem 1: Homography}\label{problem-1-homography}
+
+You should finish implementing two functions below:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{compute\_homography(src, dst)} receives two matrices of
+  points, which are each Nx2. The function should return the homography
+  matrix H that maps points from the source to the target. This return
+  value should be a 3x3 matrix. We have given you most of the solution
+  already. You just need to implement the A matrix.
+\item
+  \textbf{apply\_homography(src, H)} receives points src (Nx2 matrix)
+  and the homography transformation H (3x3 matrix). This function should
+  use the homography matrix to transform src into the destination.
+  Remember that you need to implement this using homogenous coordinates.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{compute\PYZus{}homography}\PY{p}{(}\PY{n}{src}\PY{p}{,} \PY{n}{dst}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Computes the homography from src to dst.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        src: source points, shape (n, 2)}
+        \PY{l+s+sd}{        dst: destination points, shape (n, 2)}
+        \PY{l+s+sd}{    Output:}
+        \PY{l+s+sd}{        H: homography from source points to destination points, shape (3, 3)}
+        \PY{l+s+sd}{        }
+        \PY{l+s+sd}{    TODO: Implement the A matrix. }
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            
+            \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{src}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Your code here.}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{src}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{n}{A}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                \PY{n}{A}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{src}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{dst}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{w}\PY{p}{,} \PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{A}\PY{p}{)}\PY{p}{)}
+            \PY{n}{index} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{w}\PY{p}{)}
+            \PY{n}{H} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{index}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+            \PY{k}{return} \PY{n}{H}
+        
+        \PY{k}{def} \PY{n+nf}{apply\PYZus{}homography}\PY{p}{(}\PY{n}{src}\PY{p}{,} \PY{n}{H}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Applies a homography H onto the source points.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        src: source points, shape (n, 2)}
+        \PY{l+s+sd}{        H: homography from source points to destination points, shape (3, 3)}
+        \PY{l+s+sd}{    Output:}
+        \PY{l+s+sd}{        dst: destination points, shape (n, 2)}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    TODO: Implement the apply\PYZus{}homography function}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{ones} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{src}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{n}{src} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{[}\PY{n}{src}\PY{p}{,}\PY{n}{ones}\PY{p}{]}\PY{p}{)}
+            \PY{n}{dst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{H}\PY{p}{,}\PY{n}{src}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+            \PY{n}{dst} \PY{o}{=} \PY{n}{dst} \PY{o}{/} \PY{n}{dst}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+            
+            \PY{k}{return} \PY{n}{dst}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{T}
+\end{Verbatim}
+
+
+    To help you debug the homography code, we have provided a test below.
+This uses pairs of points (src\_pts and dst\_pts) to compute the
+homography. Then, it applies the homography on held-out points
+(test\_pts), and visualizes the correspondence as red lines between the
+two images. If you have correctly implemented compute\_homography() and
+apply\_homography, the red lines should connect the same points in both
+images.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{test\PYZus{}homography}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{src\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{portrait.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}
+            \PY{n}{dst\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{portrait\PYZus{}transformed.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{whole\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{p}{,} \PY{n}{dst\PYZus{}img}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+            \PY{n}{src\PYZus{}pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{347, 313; 502, 341; 386, 571; 621, 508}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{dst\PYZus{}pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{274, 286; 436, 305; 305, 527; 615, 506}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{H} \PY{o}{=} \PY{n}{compute\PYZus{}homography}\PY{p}{(}\PY{n}{src\PYZus{}pts}\PY{p}{,} \PY{n}{dst\PYZus{}pts}\PY{p}{)}
+        
+            \PY{n}{test\PYZus{}pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{259, 505; 350, 371; 400, 675; 636, 104}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{match\PYZus{}pts} \PY{o}{=} \PY{n}{apply\PYZus{}homography}\PY{p}{(}\PY{n}{test\PYZus{}pts}\PY{p}{,} \PY{n}{H}\PY{p}{)}
+        
+            \PY{n}{match\PYZus{}pts\PYZus{}correct} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{195.13761083, 448.12645033;}\PY{l+s+s1}{\PYZsq{}}
+                                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{275.27269386, 336.54819916;}\PY{l+s+s1}{\PYZsq{}}
+                                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{317.37663747, 636.78403426;}\PY{l+s+s1}{\PYZsq{}}
+                                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{618.50438823, 28.78963905}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Your solution differs from our solution by: }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s1}{\PYZsq{}}
+                  \PY{o}{\PYZpc{}} \PY{n}{np}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{n}{match\PYZus{}pts} \PY{o}{\PYZhy{}} \PY{n}{match\PYZus{}pts\PYZus{}correct}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{test\PYZus{}pts}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{n}{test\PYZus{}x} \PY{o}{=} \PY{n}{test\PYZus{}pts}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+                \PY{n}{test\PYZus{}y} \PY{o}{=} \PY{n}{test\PYZus{}pts}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+                \PY{n}{match\PYZus{}x} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{match\PYZus{}pts}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{800}\PY{p}{)}\PY{p}{)}
+                \PY{n}{match\PYZus{}y} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{match\PYZus{}pts}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        
+                \PY{n}{cv2}\PY{o}{.}\PY{n}{line}\PY{p}{(}\PY{n}{whole\PYZus{}img}\PY{p}{,}
+                    \PY{p}{(}\PY{n}{test\PYZus{}x}\PY{p}{,} \PY{n}{test\PYZus{}y}\PY{p}{)}\PY{p}{,} 
+                    \PY{p}{(}\PY{n}{match\PYZus{}x}\PY{p}{,} \PY{n}{match\PYZus{}y}\PY{p}{)}\PY{p}{,} 
+                    \PY{p}{(}\PY{l+m+mi}{255}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{thickness}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+                \PY{n}{cv2}\PY{o}{.}\PY{n}{circle}\PY{p}{(}\PY{n}{whole\PYZus{}img}\PY{p}{,}
+                    \PY{p}{(}\PY{n}{test\PYZus{}x}\PY{p}{,} \PY{n}{test\PYZus{}y}\PY{p}{)}\PY{p}{,}
+                    \PY{l+m+mi}{4}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{255}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{thickness}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+                \PY{n}{cv2}\PY{o}{.}\PY{n}{circle}\PY{p}{(}\PY{n}{whole\PYZus{}img}\PY{p}{,}
+                    \PY{p}{(}\PY{n}{match\PYZus{}x}\PY{p}{,} \PY{n}{match\PYZus{}y}\PY{p}{)}\PY{p}{,}
+                    \PY{l+m+mi}{4}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{255}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{thickness}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+        
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{If your solution is correct, the red lines will match to the same points in both images below:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{show\PYZus{}image}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{whole\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} 
+        
+        \PY{n}{test\PYZus{}homography}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Your solution differs from our solution by: 0.000000
+If your solution is correct, the red lines will match to the same points in both images below:
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Problem 2: Warping}\label{problem-2-warping}
+
+When we map a source image to its destination image using a homography,
+we may encounter a problem where multiple pixels of the source image are
+mapped to the same point of its destination image. What's more, some
+pixels of the destination image may not be mapped to any pixels of
+source image. What should we do?
+
+Suppose we had homography \(H\), source pixel \(s\) with coordinates
+\((x_s, y_s)\), and destination pixel \(d\) with coordinates
+\((x_d, y_d)\). Then, \(H \cdot \tilde{s} = \tilde{d}\) (where, \(s\),
+\(d\) are in homogenous space).
+
+To deal with this problem, we warp in the opposite direction: we map the
+pixels of the destination image back to source image, and then use the
+color in the source image as its color. More precisely, for each
+destination pixel \(d = (x_d, y_d)\), we take \(H^{-1} \cdot \tilde{d}\)
+to obtain the coordinate of its associated source pixel, \(\tilde{s}\)
+(from which \(s\) can be found). If \(s\) is within the bounds of the
+source image, we take the intensity of \(s\) to be the intensity of
+\(d\).
+
+Repeating this process over the entire destination image ensures that
+there are no gaps in the final result. This process is called "backward
+warping".
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{backward\PYZus{}warp\PYZus{}img}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{p}{,} \PY{n}{H}\PY{p}{,} \PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Backward warping of the source image using a homography.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        src\PYZus{}img: source image, shape (m, n, 3)}
+        \PY{l+s+sd}{        H: homography from destination to source image, shape (3, 3)}
+        \PY{l+s+sd}{        dst\PYZus{}img\PYZus{}size: height and width of destination image, shape (2,)}
+        \PY{l+s+sd}{    Output:}
+        \PY{l+s+sd}{        dst\PYZus{}img: destination image, shape (m, n, 3)}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    TODO: Implement the backward\PYZus{}warp\PYZus{}img function. }
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{dict\PYZus{}matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n}{dict\PYZus{}matrix}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+                \PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*} \PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+            \PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}
+            \PY{n}{dict\PYZus{}matrix}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+                \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}
+            
+            \PY{n}{dict\PYZus{}matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{H}\PY{p}{,}\PY{n}{dict\PYZus{}matrix}\PY{p}{)}
+            \PY{n}{dict\PYZus{}matrix} \PY{o}{=} \PY{n}{dict\PYZus{}matrix} \PY{o}{/} \PY{n}{dict\PYZus{}matrix}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,}\PY{p}{:}\PY{p}{]}
+            \PY{n}{dict\PYZus{}matrix} \PY{o}{=} \PY{n}{dict\PYZus{}matrix}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{int32}\PY{p}{)}
+            
+            \PY{n}{dst\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{r} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{x} \PY{o}{=} \PY{n}{dict\PYZus{}matrix}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{r}\PY{o}{*}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{+}\PY{n}{c}\PY{p}{]}
+                    \PY{n}{y} \PY{o}{=} \PY{n}{dict\PYZus{}matrix}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{r}\PY{o}{*}\PY{n}{dst\PYZus{}img\PYZus{}size}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{+}\PY{n}{c}\PY{p}{]}
+                    \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{y} \PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{n}{src\PYZus{}img}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{and} \PY{n}{y} \PY{o}{\PYZlt{}} \PY{n}{src\PYZus{}img}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{:}
+                        \PY{n}{dst\PYZus{}img}\PY{p}{[}\PY{n}{r}\PY{p}{,}\PY{n}{c}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{src\PYZus{}img}\PY{p}{[}\PY{n}{y}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{p}{:}\PY{p}{]}
+            \PY{k}{return} \PY{n}{dst\PYZus{}img}
+        
+        \PY{k}{def} \PY{n+nf}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{img}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Create a binary mask of the image content.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        img: source image, shape (m, n, 3)}
+        \PY{l+s+sd}{    Output:}
+        \PY{l+s+sd}{        mask: image of shape (m, n) and type \PYZsq{}int\PYZsq{}. For pixel [i, j] of mask, if img[i, j] \PYZgt{} 0 }
+        \PY{l+s+sd}{              in any of its channels, mask[i, j] = 1. Else, (if img[i, j] = 0), mask[i, j] = 0.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+        
+            \PY{n}{mask} \PY{o}{=} \PY{p}{(}\PY{n}{img}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{img}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{img}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{mask} \PY{o}{=} \PY{n}{mask}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{int}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{mask}
+\end{Verbatim}
+
+
+    Use the function below to help debug your implementation. If it is
+correct, it should warp Van Gogh's self-portrait onto the building side.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{test\PYZus{}warp}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{src\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{portrait\PYZus{}small.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{canvas} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Osaka.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{src\PYZus{}pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1, 1; 1, 400; 326, 1; 326, 400}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{canvas\PYZus{}pts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{100, 18; 84, 437; 276, 71; 286, 424}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{H} \PY{o}{=} \PY{n}{compute\PYZus{}homography}\PY{p}{(}\PY{n}{src\PYZus{}pts}\PY{p}{,} \PY{n}{canvas\PYZus{}pts}\PY{p}{)}
+        
+            \PY{n}{dst\PYZus{}img} \PY{o}{=} \PY{n}{backward\PYZus{}warp\PYZus{}img}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{H}\PY{p}{)}\PY{p}{,} \PY{p}{[}\PY{n}{canvas}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{canvas}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            \PY{n}{dst\PYZus{}mask} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{dst\PYZus{}img}\PY{p}{)}
+            \PY{n}{dst\PYZus{}mask} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{(}\PY{n}{dst\PYZus{}mask}\PY{p}{,}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{out\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{canvas}\PY{p}{,} \PY{n}{dst\PYZus{}mask}\PY{p}{)} \PY{o}{+} \PY{n}{dst\PYZus{}img}
+        
+            \PY{n}{warp\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{canvas}\PY{p}{,} \PY{n}{out\PYZus{}img}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+            \PY{n}{show\PYZus{}image}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n}{warp\PYZus{}img}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            
+        \PY{n}{test\PYZus{}warp}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Problem 3: SIFT and RANSAC}\label{problem-3-sift-and-ransac}
+
+\subsection{SIFT Keypoints}\label{sift-keypoints}
+
+So far, we have manually defined corresponding keypoints for both
+estimating homographies and warping. We want to automate this now.
+However, if we just take two photos, how do we know which points
+correspond? We could estimate SIFT keypoints, and take the nearest
+neighbor between them. The code below computes SIFT keypoints, and
+visualizes the matches.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{genSIFTMatchPairs}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{n}{img2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{sift} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{xfeatures2d}\PY{o}{.}\PY{n}{SIFT\PYZus{}create}\PY{p}{(}\PY{p}{)}
+            \PY{n}{kp1}\PY{p}{,} \PY{n}{des1} \PY{o}{=} \PY{n}{sift}\PY{o}{.}\PY{n}{detectAndCompute}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+            \PY{n}{kp2}\PY{p}{,} \PY{n}{des2} \PY{o}{=} \PY{n}{sift}\PY{o}{.}\PY{n}{detectAndCompute}\PY{p}{(}\PY{n}{img2}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+        
+            \PY{n}{bf} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{BFMatcher}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{NORM\PYZus{}L2}\PY{p}{,} \PY{n}{crossCheck}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+            \PY{n}{matches} \PY{o}{=} \PY{n}{bf}\PY{o}{.}\PY{n}{match}\PY{p}{(}\PY{n}{des1}\PY{p}{,} \PY{n}{des2}\PY{p}{)}
+            \PY{n}{matches} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{matches}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:}\PY{n}{x}\PY{o}{.}\PY{n}{distance}\PY{p}{)}
+            
+            \PY{n}{pts1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{250}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+            \PY{n}{pts2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{250}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{250}\PY{p}{)}\PY{p}{:}
+                \PY{n}{pts1}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{kp1}\PY{p}{[}\PY{n}{matches}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{queryIdx}\PY{p}{]}\PY{o}{.}\PY{n}{pt}
+                \PY{n}{pts2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{kp2}\PY{p}{[}\PY{n}{matches}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{trainIdx}\PY{p}{]}\PY{o}{.}\PY{n}{pt}
+            
+            \PY{k}{return} \PY{n}{pts1}\PY{p}{,} \PY{n}{pts2}\PY{p}{,} \PY{n}{matches}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{250}\PY{p}{]}\PY{p}{,} \PY{n}{kp1}\PY{p}{,} \PY{n}{kp2}
+        
+        \PY{k}{def} \PY{n+nf}{test\PYZus{}matches}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{img1} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mountain\PYZus{}left.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{img2} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mountain\PYZus{}center.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{pts1}\PY{p}{,} \PY{n}{pts2}\PY{p}{,} \PY{n}{matches}\PY{p}{,} \PY{n}{kp1}\PY{p}{,} \PY{n}{kp2} \PY{o}{=} \PY{n}{genSIFTMatchPairs}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{n}{img2}\PY{p}{)}
+        
+            \PY{n}{matching\PYZus{}result} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{drawMatches}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{n}{kp1}\PY{p}{,} \PY{n}{img2}\PY{p}{,} \PY{n}{kp2}\PY{p}{,} \PY{n}{matches}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{flags}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{matchColor}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{matching\PYZus{}result}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{test\PYZus{}matches}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Notice that the matches are not all correct. There is a substantial
+amount of noise or incorrect matches. If we include these wrong matches
+in our homography estimation, what will happen? Think about this, and
+convince yourself why it will not work well.
+
+    \subsection{RANSAC}\label{ransac}
+
+Instead, we will use RANSAC, which is an optimization algorithm that
+finds correspondences while also discarding the outliers. Implement the
+RANSAC function below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{RANSAC}\PY{p}{(}\PY{n}{Xs}\PY{p}{,} \PY{n}{Xd}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{p}{,} \PY{n}{eps}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Finds correspondences between two sets of points using the RANSAC algorithm.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        Xs: the first set of points (source), shape [n, 2]}
+        \PY{l+s+sd}{        Xd: the second set of points (destination) matched to the first set, shape [n, 2]}
+        \PY{l+s+sd}{        max\PYZus{}iter: max iteration number of RANSAC}
+        \PY{l+s+sd}{        eps: tolerance of RANSAC}
+        \PY{l+s+sd}{    Output:}
+        \PY{l+s+sd}{        inliers\PYZus{}id: the indices of matched pairs when using the homography given by RANSAC}
+        \PY{l+s+sd}{        H: the homography, shape [3, 3]}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    TODO: Implement the RANSAC function. }
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            
+            \PY{n}{inliers\PYZus{}id} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{best\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{c+c1}{\PYZsh{}     best\PYZus{}H = None}
+            \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{max\PYZus{}iter}\PY{p}{)}\PY{p}{:}
+                \PY{n}{samples} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{Xs}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+                \PY{n}{H} \PY{o}{=} \PY{n}{compute\PYZus{}homography}\PY{p}{(}\PY{n}{Xs}\PY{p}{[}\PY{n}{samples}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{Xd}\PY{p}{[}\PY{n}{samples}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+                \PY{n}{dst} \PY{o}{=} \PY{n}{apply\PYZus{}homography}\PY{p}{(}\PY{n}{Xs}\PY{p}{,} \PY{n}{H}\PY{p}{)}
+                \PY{n}{distance} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{dst}\PY{o}{\PYZhy{}}\PY{n}{Xd}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                
+                \PY{n}{correct\PYZus{}num} \PY{o}{=} \PY{l+m+mi}{0}
+                \PY{n}{samples} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{diff} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{diff} \PY{o}{\PYZlt{}} \PY{n}{eps}\PY{p}{:}
+                        \PY{n}{correct\PYZus{}num} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                        \PY{n}{samples}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{index}\PY{p}{)}
+                        
+                \PY{k}{if} \PY{n}{correct\PYZus{}num} \PY{o}{\PYZgt{}} \PY{n}{best\PYZus{}count}\PY{p}{:}
+                    \PY{n}{best\PYZus{}count} \PY{o}{=} \PY{n}{correct\PYZus{}num}
+                    \PY{n}{inliers\PYZus{}id} \PY{o}{=} \PY{n}{samples}
+        \PY{c+c1}{\PYZsh{}             best\PYZus{}H = H}
+                
+                \PY{n}{H} \PY{o}{=} \PY{n}{compute\PYZus{}homography}\PY{p}{(}\PY{n}{Xs}\PY{p}{[}\PY{n}{samples}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{Xd}\PY{p}{[}\PY{n}{samples}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+                
+            \PY{k}{return} \PY{n}{inliers\PYZus{}id}\PY{p}{,} \PY{n}{H}
+\end{Verbatim}
+
+
+    Now, let's visualize the matches between keypoints after using your
+RANSAC implementation. If you implemented RANSAC correctly, the outlier
+matches should be automatically discarded.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{test\PYZus{}ransac}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{img1} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mountain\PYZus{}left.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{img2} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mountain\PYZus{}center.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{pts1}\PY{p}{,} \PY{n}{pts2}\PY{p}{,} \PY{n}{matches}\PY{p}{,} \PY{n}{kp1}\PY{p}{,} \PY{n}{kp2} \PY{o}{=} \PY{n}{genSIFTMatchPairs}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{n}{img2}\PY{p}{)}
+            
+            \PY{n}{inliers\PYZus{}idx}\PY{p}{,} \PY{n}{H} \PY{o}{=} \PY{n}{RANSAC}\PY{p}{(}\PY{n}{pts1}\PY{p}{,} \PY{n}{pts2}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+        
+            \PY{n}{new\PYZus{}matches} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{inliers\PYZus{}idx}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{new\PYZus{}matches}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{matches}\PY{p}{[}\PY{n}{inliers\PYZus{}idx}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        
+            \PY{n}{matching\PYZus{}result} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{drawMatches}\PY{p}{(}\PY{n}{img1}\PY{p}{,} \PY{n}{kp1}\PY{p}{,} \PY{n}{img2}\PY{p}{,} \PY{n}{kp2}\PY{p}{,} \PY{n}{new\PYZus{}matches}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{n}{flags}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{matchColor}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{matching\PYZus{}result}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}\PY{p}{)}
+            
+        \PY{n}{test\PYZus{}ransac}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Problem 4: Image Blending}\label{problem-4-image-blending}
+
+We have now implemented code to estimate correspondences between photos,
+estimate the homography, and warp one image into the other image. Before
+we can build our panorama making application, the next piece we need is
+code to seamlessly blend two images together.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{ndimage}\PY{n+nn}{.}\PY{n+nn}{morphology} \PY{k}{import} \PY{n}{distance\PYZus{}transform\PYZus{}edt} \PY{k}{as} \PY{n}{euc\PYZus{}dist}
+         
+         \PY{k}{def} \PY{n+nf}{blend\PYZus{}image\PYZus{}pair}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{p}{,} \PY{n}{src\PYZus{}mask}\PY{p}{,} \PY{n}{dst\PYZus{}img}\PY{p}{,} \PY{n}{dst\PYZus{}mask}\PY{p}{,} \PY{n}{mode}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Given two images and their binary masks, blend the two images.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Input:}
+         \PY{l+s+sd}{        src\PYZus{}img: First image to be blended, shape (m, n, 3)}
+         \PY{l+s+sd}{        src\PYZus{}mask: src\PYZus{}img\PYZsq{}s binary mask, shape (m, n)}
+         \PY{l+s+sd}{        dst\PYZus{}img: Second image to be blended, shape (m, n, 3)}
+         \PY{l+s+sd}{        dst\PYZus{}mask: dst\PYZus{}img\PYZsq{}s binary mask, shape (m, n)}
+         \PY{l+s+sd}{        mode: Blending mode, either \PYZdq{}overlay\PYZdq{} or \PYZdq{}blend\PYZdq{}}
+         \PY{l+s+sd}{    Output:}
+         \PY{l+s+sd}{        Blended image of shape (m, n, 3)}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    TODO: Implement the blend\PYZus{}image\PYZus{}pair function.}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{k}{if} \PY{n}{mode} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blend}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{blend\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{p}{)}
+                 \PY{n}{w1}  \PY{o}{=} \PY{n}{euc\PYZus{}dist}\PY{p}{(}\PY{n}{src\PYZus{}mask}\PY{p}{)}
+                 \PY{n}{w2}  \PY{o}{=} \PY{n}{euc\PYZus{}dist}\PY{p}{(}\PY{n}{dst\PYZus{}mask}\PY{p}{)}
+         
+                 \PY{n}{w1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{w1}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{n}{w2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{w2}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+         
+                 \PY{n}{weight\PYZus{}sum} \PY{o}{=} \PY{n}{w1} \PY{o}{+} \PY{n}{w2}
+                 \PY{n}{weight\PYZus{}img} \PY{o}{=} \PY{n}{w1} \PY{o}{*} \PY{n}{src\PYZus{}img} \PY{o}{+} \PY{n}{w2} \PY{o}{*} \PY{n}{dst\PYZus{}img}
+                 \PY{n}{flag} \PY{o}{=} \PY{p}{(}\PY{n}{weight\PYZus{}sum} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{float}\PY{p}{)}
+                 \PY{n}{weight\PYZus{}sum} \PY{o}{+}\PY{o}{=} \PY{n}{flag}
+         
+                 \PY{n}{blend\PYZus{}img} \PY{o}{=} \PY{n}{weight\PYZus{}img} \PY{o}{/} \PY{n}{weight\PYZus{}sum}
+                 
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{dst\PYZus{}mask} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{tile}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{dst\PYZus{}mask}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{blend\PYZus{}img} \PY{o}{=} \PY{n}{src\PYZus{}img} \PY{o}{\PYZhy{}} \PY{n}{src\PYZus{}img}\PY{o}{*}\PY{n}{dst\PYZus{}mask} \PY{o}{+} \PY{n}{dst\PYZus{}img}
+                 
+             \PY{k}{return} \PY{n}{blend\PYZus{}img}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{src\PYZus{}img}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+\end{Verbatim}
+
+
+    To test your implementation, you can use the function below. It supports
+two modes. Setting mode="blend" should seamlessly blend the two images.
+Setting mode="overlay" will just combine them without any blending.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{test\PYZus{}blend}\PY{p}{(}\PY{n}{mode}\PY{p}{)}\PY{p}{:}
+             \PY{n}{fish\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{escher\PYZus{}fish.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}
+             \PY{n}{horse\PYZus{}img} \PY{o}{=} \PY{n}{load\PYZus{}image}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{escher\PYZus{}horsemen.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}
+         
+             \PY{n}{blend\PYZus{}img} \PY{o}{=} \PY{n}{blend\PYZus{}image\PYZus{}pair}\PY{p}{(}\PY{n}{fish\PYZus{}img}\PY{p}{,} \PY{n}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{fish\PYZus{}img}\PY{p}{)}\PY{p}{,} \PY{n}{horse\PYZus{}img}\PY{p}{,} \PY{n}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{horse\PYZus{}img}\PY{p}{)}\PY{p}{,} \PY{n}{mode}\PY{p}{)}
+         
+             \PY{n}{f}\PY{p}{,} \PY{n}{axarr} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+             \PY{n}{axarr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{fish\PYZus{}img}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{axarr}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{horse\PYZus{}img}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{axarr}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{blend\PYZus{}img}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+         \PY{n}{test\PYZus{}blend}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blend}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{test\PYZus{}blend}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{overlay}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Problem 5: Creating
+Panoramas}\label{problem-5-creating-panoramas}
+
+We are now ready to make a panorama from the three images at the
+beginning. The function below receives a Python list of images, which
+you should stitch together to form one large image. You will need to
+call most of the functions defined above in order to successfully do
+this.
+
+To receive full credit, make sure you have stitched the three images
+together with very little seam between them.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{stitch\PYZus{}img}\PY{p}{(}\PY{n}{imgs}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Stitch a list of images together.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Input: }
+         \PY{l+s+sd}{        imgs: a list of images.}
+         \PY{l+s+sd}{    Output:}
+         \PY{l+s+sd}{        stitched\PYZus{}img: a single stiched image.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{    TODO: implement the stitch\PYZus{}img function. }
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{num\PYZus{}imgs} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{imgs}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}imgs} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2}\PY{p}{:}
+                 \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{insufficient images!}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 
+             \PY{n}{base\PYZus{}img} \PY{o}{=} \PY{n}{imgs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{canvas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{base\PYZus{}img}\PY{p}{)}
+             \PY{n}{canvas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{tile}\PY{p}{(}\PY{n}{canvas}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{num\PYZus{}imgs} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{panorama} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{[}\PY{n}{canvas}\PY{p}{,}\PY{n}{base\PYZus{}img}\PY{p}{,}\PY{n}{canvas}\PY{p}{]}\PY{p}{)}
+         
+             \PY{n}{left\PYZus{}img} \PY{o}{=} \PY{n}{panorama}
+             \PY{n}{right\PYZus{}img} \PY{o}{=} \PY{n}{panorama}
+             
+             \PY{n}{unused\PYZus{}imgs} \PY{o}{=} \PY{n}{imgs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+             
+             \PY{n}{trial} \PY{o}{=} \PY{l+m+mi}{0}
+             
+             \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{unused\PYZus{}imgs}\PY{p}{)} \PY{o}{!=} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{trial} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{num\PYZus{}imgs}\PY{p}{:}
+                 \PY{n}{trial} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stitch }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ images}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{trial}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{current\PYZus{}img} \PY{o}{=} \PY{n}{unused\PYZus{}imgs}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             
+                 \PY{n}{cur\PYZus{}pts}\PY{p}{,} \PY{n}{pano\PYZus{}pts}\PY{p}{,}\PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{\PYZus{}}\PY{p}{,}\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{genSIFTMatchPairs}\PY{p}{(}\PY{n}{current\PYZus{}img}\PY{p}{,} \PY{n}{panorama}\PY{p}{)}
+             
+                 \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{cur\PYZus{}pts}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{4}\PY{p}{:}
+                     \PY{n}{unused\PYZus{}imgs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{current\PYZus{}img}\PY{p}{)}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Current image cannot be stitched. Would try later...}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                     \PY{k}{continue}
+             
+         
+                 \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{H} \PY{o}{=} \PY{n}{RANSAC}\PY{p}{(}\PY{n}{cur\PYZus{}pts}\PY{p}{,} \PY{n}{pano\PYZus{}pts}\PY{p}{,} \PY{l+m+mi}{5000}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}
+                     
+                 \PY{n}{dst} \PY{o}{=} \PY{n}{backward\PYZus{}warp\PYZus{}img}\PY{p}{(}\PY{n}{current\PYZus{}img}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{H}\PY{p}{)}\PY{p}{,} \PY{p}{[}\PY{n}{panorama}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{panorama}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}    
+                 \PY{n}{panorama} \PY{o}{=} \PY{n}{blend\PYZus{}image\PYZus{}pair}\PY{p}{(}\PY{n}{panorama}\PY{p}{,} \PY{n}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{panorama}\PY{p}{)}\PY{p}{,} \PY{n}{dst}\PY{p}{,} \PY{n}{binary\PYZus{}mask}\PY{p}{(}\PY{n}{dst}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blend}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                         
+             \PY{n}{mask} \PY{o}{=} \PY{p}{(}\PY{n}{panorama}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{panorama}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{panorama}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{mask} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{mask}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{mask} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{mask} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{panorama}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{mask}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{:}\PY{n}{mask}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{p}{:}\PY{p}{]}      
+             
+\end{Verbatim}
+
+
+    Use the below code to test your implementation. This code just reads in
+the images, calls the stitch\_img() function, and plots the results.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{center\PYZus{}img} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}center.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{left\PYZus{}img} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}left.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{right\PYZus{}img} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mountain\PYZus{}right.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{final\PYZus{}img} \PY{o}{=} \PY{n}{stitch\PYZus{}img}\PY{p}{(}\PY{p}{[}\PY{n}{center\PYZus{}img}\PY{p}{,} \PY{n}{left\PYZus{}img}\PY{p}{,} \PY{n}{right\PYZus{}img}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{final\PYZus{}img}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{uint8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Stitch 1 images
+Stitch 2 images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Make Your Own Panarama}\label{make-your-own-panarama}
+
+Use a digital camera, such as from your phone, and take three or more
+photos to create your own panaroma. Remember to be stand in place and
+only rotate the camera (Think about: why?). Include them in your
+submission, and we will show the best ones during lecture.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{\PYZus{}1} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{1.jpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{\PYZus{}2} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2.jpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{\PYZus{}3} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3.jpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{img\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{n}{\PYZus{}2}\PY{p}{,} \PY{n}{\PYZus{}1}\PY{p}{,} \PY{n}{\PYZus{}3}\PY{p}{]}  
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{} TODO: Load your own images here and create a panorama. \PYZsq{}\PYZsq{}\PYZsq{}}
+         
+         \PY{n}{final\PYZus{}img} \PY{o}{=} \PY{n}{stitch\PYZus{}img}\PY{p}{(}\PY{n}{img\PYZus{}list}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{final\PYZus{}img}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{uint8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Stitch 1 images
+Stitch 2 images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
